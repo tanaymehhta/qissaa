@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Qissaa"
+description = "A story-led landing page for Qissaa, a contemporary Indian home-fragrance brand. Introduces the brand, its scent stories, products and shopping paths to fragrance-conscious home owners."
+version = "1.0.0"
+id = "artifacts/qissaa"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22983
+
+[services.development]
+run = "pnpm --filter @workspace/qissaa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/qissaa", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/qissaa/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22983"
+BASE_PATH = "/"
